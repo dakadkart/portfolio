@@ -1,117 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Case Competition Portfolio</title>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <style>
-        :root {
-            --bg: #0f172a;
-            --card-bg: #1e293b;
-            --text: #f8fafc;
-            --text-dim: #94a3b8;
-            --primary: #38bdf8;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 2rem 1rem;
-            line-height: 1.5;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        h1 { margin-bottom: 0.5rem; color: var(--text); }
-        .subtitle { color: var(--text-dim); font-size: 1.1rem; }
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-        @media (min-width: 640px) {
-            .grid { grid-template-columns: 1fr 1fr; }
-        }
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 1.5rem;
-            border: 1px solid #334155;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .tag {
-            background: rgba(56, 189, 248, 0.1);
-            color: var(--primary);
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 0.75rem;
-        }
-        h3 { margin: 0 0 0.5rem 0; font-size: 1.25rem; }
-        p { color: var(--text-dim); font-size: 0.95rem; margin: 0 0 1.5rem 0; }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-        .btn:hover { text-decoration: underline; }
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0f1e35;--navy-mid:#1a3252;--gold:#c9a84c;--gold-light:#e8c97a;
+  --cream:#f9f6f0;--smoke:#f0ece4;--text:#1e2836;--muted:#6b7280;
+  --border:#ddd6c8;--white:#ffffff;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh}
+/* header */
+.header{background:var(--navy);padding:52px 40px 42px;text-align:center;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,transparent,transparent 40px,
+  rgba(201,168,76,.04) 40px,rgba(201,168,76,.04) 41px)}
+.header-inner{position:relative;z-index:1}
+.gold-rule{width:48px;height:2px;background:var(--gold);margin:0 auto 20px}
+.header h1{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,42px);
+  font-weight:700;color:var(--white);letter-spacing:2px;text-transform:uppercase;line-height:1.15}
+.header h1 span{color:var(--gold)}
+.header-sub{margin-top:10px;font-size:13px;font-weight:500;letter-spacing:3px;
+  text-transform:uppercase;color:rgba(255,255,255,.45)}
+.header-divider{width:100%;height:1px;
+  background:linear-gradient(to right,transparent,var(--gold),transparent);
+  margin-top:28px;opacity:.4}
+/* body */
+.body{max-width:820px;margin:0 auto;padding:48px 24px 64px}
+/* about */
+.about-block{border-left:3px solid var(--gold);padding:4px 0 4px 20px;margin-bottom:52px}
+.section-label{font-size:10px;font-weight:600;letter-spacing:3px;
+  text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.about-block p{font-size:15px;line-height:1.8;color:#3d4a5c;font-weight:300}
+/* section heading */
+.cases-heading{display:flex;align-items:center;gap:16px;margin-bottom:28px}
+.cases-heading .section-label{margin-bottom:0}
+.cases-heading::after{content:'';flex:1;height:1px;background:var(--border)}
+/* card */
+.case-card{background:var(--white);border:1px solid var(--border);border-radius:8px;
+  margin-bottom:20px;overflow:hidden;transition:box-shadow .25s,border-color .25s}
+.case-card:hover{box-shadow:0 6px 28px rgba(15,30,53,.09);border-color:#c5bfb4}
+/* card header */
+.card-trigger{display:flex;align-items:center;justify-content:space-between;
+  padding:22px 26px;cursor:pointer;user-select:none;gap:16px}
+.card-trigger:hover .card-title{color:var(--navy-mid)}
+.card-left{flex:1;min-width:0}
+.card-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;
+  color:var(--navy);transition:color .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-meta{font-size:12px;color:var(--muted);margin-top:4px;font-weight:400}
+.card-right{display:flex;align-items:center;gap:12px;flex-shrink:0}
+/* badges */
+.badge{font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;
+  padding:5px 12px;border-radius:4px;white-space:nowrap}
+.badge-submitted{background:#f3f4f6;color:#374151;border:1px solid #d1d5db}
+.badge-semifinal{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.badge-finalist {background:#d1fae5;color:#065f46;border:1px solid #6ee7b7}
+.badge-winner   {background:var(--gold);color:var(--navy);border:1px solid var(--gold-light)}
+.badge-cert     {background:#ede9fe;color:#5b21b6;border:1px solid #c4b5fd}
+/* chevron */
+.chevron{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:background .2s,border-color .2s,transform .3s ease}
+.chevron svg{width:12px;height:12px;stroke:var(--muted);transition:stroke .2s}
+.case-card.open .chevron{background:var(--navy);border-color:var(--navy);transform:rotate(180deg)}
+.case-card.open .chevron svg{stroke:var(--white)}
+/* drawer */
+.card-drawer{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1)}
+.case-card.open .card-drawer{max-height:1200px}
+.drawer-inner{border-top:1px solid var(--smoke);padding:0 26px 26px}
+.drawer-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);font-weight:600;padding:16px 0 12px}
+/* PDF grid: submission left, certificate right */
+.pdf-grid{display:grid;gap:16px;grid-template-columns:1fr}
+.pdf-grid.two-col{grid-template-columns:1fr 1fr}
+@media(max-width:600px){.pdf-grid.two-col{grid-template-columns:1fr}}
+.pdf-pane-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);font-weight:600;margin-bottom:8px}
+.pdf-frame-wrap{border-radius:6px;overflow:hidden;border:1px solid var(--border);background:#f5f5f5}
+.pdf-frame-wrap iframe{width:100%;height:480px;border:none;display:block}
+/* footer */
+.footer{text-align:center;padding:28px;font-size:11px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--muted);border-top:1px solid var(--border)}
+</style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>Our Case Competition Portfolio</h1>
-            <p class="subtitle">A showcase of strategic solutions, teamwork, and awards.</p>
-        </header>
+<div class="header">
+  <div class="header-inner">
+    <div class="gold-rule"></div>
+    <h1>Case&#8209;Comp&#8209;<span>Gang</span></h1>
+    <p class="header-sub">PGDM Candidate Portfolio &amp; Strategy Profile</p>
+    <div class="header-divider"></div>
+  </div>
+</div>
 
-        <main class="grid">
-            <!-- COMPETITION 1 -->
-            <div class="card">
-                <div>
-                    <span class="tag">1st Place Winner</span>
-                    <h3>Corporate Strategy Challenge 2026</h3>
-                    <p>Developed a market entry strategy for an EV charging network. Focused on financial modeling and grid constraints.</p>
-                </div>
-                <!-- Change 'certificate1.pdf' to your actual file name later -->
-                <a href="certificate1.pdf" target="_blank" class="btn">
-                    <i data-feather="award"></i> View Certificate
-                </a>
-            </div>
+<div class="body">
 
-            <!-- COMPETITION 2 -->
-            <div class="card">
-                <div>
-                    <span class="tag">National Finalist</span>
-                    <h3>HackerX Product Case Study</h3>
-                    <p>Designed a retention framework for a major B2B SaaS platform, reducing churn projections by 14%.</p>
-                </div>
-                <a href="certificate2.pdf" target="_blank" class="btn">
-                    <i data-feather="award"></i> View Certificate
-                </a>
-            </div>
-            
-            <!-- You can copy/paste more card blocks here to add more competitions -->
-        </main>
+  <div class="about-block">
+    <div class="section-label">About the Team</div>
+    <p>We are a dedicated cohort of PGDM candidates specialising in strategic
+    problem-solving, market analysis, and financial modelling. Case-Comp-Gang was
+    formed to synergise our diverse academic backgrounds into a unified consulting
+    powerhouse. This portfolio chronicles our journey, analytical rigour, and
+    milestones achieved across premier business case competitions.</p>
+  </div>
+
+  <div class="cases-heading">
+    <div class="section-label">Case Competition Reports</div>
+  </div>
+
+  <div class="case-card" id="card-bits-pilani-consultathon-level-1">
+    <div class="card-trigger" onclick="toggleCard('card-bits-pilani-consultathon-level-1')">
+      <div class="card-left">
+        <div class="card-title">BITS Pilani - Consultathon Level 1</div>
+        <div class="card-meta">BITS Pilani &nbsp;&middot;&nbsp; Level 1</div>
+      </div>
+      <div class="card-right">
+        <span class="badge badge-submitted">Level 1</span>
+        <div class="chevron">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </div>
     </div>
+    <div class="card-drawer">
+      <div class="drawer-inner">
+        <div class="drawer-label">Case Report Document</div>
+        <div class="pdf-grid">
+          <div>
+            <div class="pdf-pane-label">Case Report</div>
+            <div class="pdf-frame-wrap">
+              <iframe src="https://docs.google.com/viewer?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdakadkart%2Fportfolio%2Fmain%2Fsubmissions%2Fbits-pilani-consultathon-level-1.pdf&embedded=true" loading="lazy"></iframe>
+            </div>
+          </div>
 
-    <script>
-        feather.replace();
-    </script>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="case-card" id="card-bits-pilani-lvl-2">
+    <div class="card-trigger" onclick="toggleCard('card-bits-pilani-lvl-2')">
+      <div class="card-left">
+        <div class="card-title">BITS Pilani - Level 2</div>
+        <div class="card-meta">BITS Pilani &nbsp;&middot;&nbsp; Level 2</div>
+      </div>
+      <div class="card-right">
+        <span class="badge badge-semifinal">Level 2</span>
+        <div class="chevron">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="card-drawer">
+      <div class="drawer-inner">
+        <div class="drawer-label">Case Report Document</div>
+        <div class="pdf-grid">
+          <div>
+            <div class="pdf-pane-label">Case Report</div>
+            <div class="pdf-frame-wrap">
+              <iframe src="https://docs.google.com/viewer?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdakadkart%2Fportfolio%2Fmain%2Fsubmissions%2Fbits-pilani-lvl-2.pdf&embedded=true" loading="lazy"></iframe>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="case-card" id="card-delhi-university-energy-transition-case">
+    <div class="card-trigger" onclick="toggleCard('card-delhi-university-energy-transition-case')">
+      <div class="card-left">
+        <div class="card-title">Delhi University - Energy Transition Case</div>
+        <div class="card-meta">Delhi University &nbsp;&middot;&nbsp; Unknown</div>
+      </div>
+      <div class="card-right">
+        <span class="badge badge-submitted">Unknown</span>
+        <div class="chevron">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="card-drawer">
+      <div class="drawer-inner">
+        <div class="drawer-label">Case Document &amp; Certificate</div>
+        <div class="pdf-grid two-col">
+          <div>
+            <div class="pdf-pane-label">Case Report</div>
+            <div class="pdf-frame-wrap">
+              <iframe src="https://docs.google.com/viewer?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdakadkart%2Fportfolio%2Fmain%2Fsubmissions%2Fdelhi-university-energy-transition-case.pdf&embedded=true" loading="lazy"></iframe>
+            </div>
+          </div>
+          <div>
+            <div class="pdf-pane-label">Certificate</div>
+            <div class="pdf-frame-wrap">
+              <iframe src="https://docs.google.com/viewer?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdakadkart%2Fportfolio%2Fmain%2Fcertificates%2Fhindu-college-du-certificate-of-participation.pdf&embedded=true" loading="lazy"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="case-card" id="card-iit-bhu-ola">
+    <div class="card-trigger" onclick="toggleCard('card-iit-bhu-ola')">
+      <div class="card-left">
+        <div class="card-title">IIT BHU - OLA Mobility Case</div>
+        <div class="card-meta">IIT BHU &nbsp;&middot;&nbsp; Unknown</div>
+      </div>
+      <div class="card-right">
+        <span class="badge badge-submitted">Unknown</span>
+        <div class="chevron">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="card-drawer">
+      <div class="drawer-inner">
+        <div class="drawer-label">Case Report Document</div>
+        <div class="pdf-grid">
+          <div>
+            <div class="pdf-pane-label">Case Report</div>
+            <div class="pdf-frame-wrap">
+              <iframe src="https://docs.google.com/viewer?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdakadkart%2Fportfolio%2Fmain%2Fsubmissions%2Fiit-bhu-ola.pdf&embedded=true" loading="lazy"></iframe>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="case-card" id="card-nyka-ai-tear-down">
+    <div class="card-trigger" onclick="toggleCard('card-nyka-ai-tear-down')">
+      <div class="card-left">
+        <div class="card-title">Unknown - Nyka AI Tear Down</div>
+        <div class="card-meta">Unknown &nbsp;&middot;&nbsp; Unknown</div>
+      </div>
+      <div class="card-right">
+        <span class="badge badge-submitted">Unknown</span>
+        <div class="chevron">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="card-drawer">
+      <div class="drawer-inner">
+        <div class="drawer-label">Case Report Document</div>
+        <div class="pdf-grid">
+          <div>
+            <div class="pdf-pane-label">Case Report</div>
+            <div class="pdf-frame-wrap">
+              <iframe src="https://docs.google.com/viewer?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdakadkart%2Fportfolio%2Fmain%2Fsubmissions%2Fnyka-ai-tear-down.pdf&embedded=true" loading="lazy"></iframe>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="case-card" id="card-bits-pilani-business-case-competition-level-2">
+    <div class="card-trigger" onclick="toggleCard('card-bits-pilani-business-case-competition-level-2')">
+      <div class="card-left">
+        <div class="card-title">BITS Pilani - Business Case Competition Level 2</div>
+        <div class="card-meta">BITS Pilani &nbsp;&middot;&nbsp; Level 2</div>
+      </div>
+      <div class="card-right">
+        <span class="badge badge-semifinal">Level 2</span>
+        <div class="chevron">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="card-drawer">
+      <div class="drawer-inner">
+        <div class="drawer-label">Case Report Document</div>
+        <div class="pdf-grid">
+          <div>
+            <div class="pdf-pane-label">Case Report</div>
+            <div class="pdf-frame-wrap">
+              <iframe src="https://docs.google.com/viewer?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdakadkart%2Fportfolio%2Fmain%2Fsubmissions%2Fbits-pilani-business-case-competition-level-2.pdf&embedded=true" loading="lazy"></iframe>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="case-card" id="card-bits-pilani-consultathon-level-2">
+    <div class="card-trigger" onclick="toggleCard('card-bits-pilani-consultathon-level-2')">
+      <div class="card-left">
+        <div class="card-title">BITS Pilani - Consultathon Level 2</div>
+        <div class="card-meta">BITS Pilani &nbsp;&middot;&nbsp; Level 2</div>
+      </div>
+      <div class="card-right">
+        <span class="badge badge-semifinal">Level 2</span>
+        <div class="chevron">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="card-drawer">
+      <div class="drawer-inner">
+        <div class="drawer-label">Case Report Document</div>
+        <div class="pdf-grid">
+          <div>
+            <div class="pdf-pane-label">Case Report</div>
+            <div class="pdf-frame-wrap">
+              <iframe src="https://docs.google.com/viewer?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdakadkart%2Fportfolio%2Fmain%2Fsubmissions%2Fbits-pilani-consultathon-level-2.pdf&embedded=true" loading="lazy"></iframe>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="case-card" id="card-nykaa-ai-tear-down">
+    <div class="card-trigger" onclick="toggleCard('card-nykaa-ai-tear-down')">
+      <div class="card-left">
+        <div class="card-title">Unknown - Nykaa AI Tear Down</div>
+        <div class="card-meta">Unknown &nbsp;&middot;&nbsp; Unknown</div>
+      </div>
+      <div class="card-right">
+        <span class="badge badge-submitted">Unknown</span>
+        <div class="chevron">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="card-drawer">
+      <div class="drawer-inner">
+        <div class="drawer-label">Case Report Document</div>
+        <div class="pdf-grid">
+          <div>
+            <div class="pdf-pane-label">Case Report</div>
+            <div class="pdf-frame-wrap">
+              <iframe src="https://docs.google.com/viewer?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdakadkart%2Fportfolio%2Fmain%2Fsubmissions%2Fnykaa-ai-tear-down.pdf&embedded=true" loading="lazy"></iframe>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">Case-Comp-Gang &nbsp;&middot;&nbsp; PGDM Portfolio &nbsp;&middot;&nbsp; BIMTECH 2026-28</div>
+
+<script>
+function toggleCard(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+</script>
+
 </body>
 </html>
